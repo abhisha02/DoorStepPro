@@ -80,6 +80,7 @@ class OTPVerificationView(APIView):
             # OTP is valid, proceed with user registration
             
             user.is_active = True
+            user.is_email_verified=True
             # Save the user
             user.save()
             
@@ -101,6 +102,7 @@ class LoginView(APIView):
             user = Customer.objects.get(email=email)
         except Customer.DoesNotExist:
             user = None
+        print(user)
         
         if user is not None and user.check_password(password):
             refresh = RefreshToken.for_user(user)  # Generate refresh token

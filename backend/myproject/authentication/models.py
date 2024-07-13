@@ -14,7 +14,7 @@ class CustomerManager(BaseUserManager):
 
     def create_superuser(self, email, phone_number, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_admin', True)
         extra_fields.setdefault('is_active', True)
 
         if extra_fields.get('is_staff') is not True:
@@ -31,6 +31,9 @@ class Customer(AbstractUser):
     email = models.EmailField(max_length=100, unique=True)
     is_email_verified = models.BooleanField(default=False)
     profile = models.ImageField(upload_to='user_profiles', blank=True, null=True)
+    is_admin = models.BooleanField(default=False)
+    is_staff=models.BooleanField(default=False)
+
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['phone_number', 'first_name', 'last_name']
